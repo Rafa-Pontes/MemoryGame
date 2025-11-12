@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <link rel="stylesheet" href="/Pokedex/style/login.css">
+    <link rel="stylesheet" href="/Pokedex/style/game.css">
+</head>
+<body>
+    <main id="login-screen">
+        
+        <h1>Pokémon - memory game</h1>
+        <input type="text" id="player-name" placeholder="Digite seu nome, treinador!">
+        <button id="start-btn">Começar Jogo</button>
+        
+        <h3>🏆 Ranking dos Melhores Treinadores 🏆</h3>
+        <ul id="ranking-list"></ul>
+    </main>
+
+    <section id="game-screen" style="display:none;">
+        <div id="timer">Tempo: 0s</div>
+        <div class="container"></div>
+    </section>
+
+    <script type="module" src="/Pokedex/js/main.js"></script>
+</body>
+</html>

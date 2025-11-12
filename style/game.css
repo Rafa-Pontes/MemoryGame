@@ -1,0 +1,122 @@
+/* --- Reset Básico --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Fonte pixelada para o jogo */
+    font-family: 'Press Start 2P', cursive; 
+    
+    /* Gradiente diferente para a tela do jogo */
+    background: linear-gradient(135deg, #ffcb05, #3b4cca);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem; /* Espaço para telas menores */
+}
+
+/* ---- TABULEIRO DO JOGO ---- */
+.container {
+    width: 900px;
+    max-width: 100%; /* Adicionado para responsividade */
+    height: 500px;
+    max-height: 90vh; /* Adicionado para responsividade */
+    
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+    padding: 20px;
+    perspective: 1000px;
+}
+
+/* ---- CARTAS ---- */
+.card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.card.flip {
+    transform: rotateY(180deg);
+}
+
+.card .front,
+.card .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Evita "piscar" a imagem de trás */
+    border-radius: 10px;
+}
+
+/* Frente da carta (Pokémon) */
+.card .front {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotateY(180deg);
+    border: 2px solid #3b4cca;
+}
+
+.card .front img {
+    width: 80%;
+    height: auto;
+    image-rendering: pixelated; /* Mantém o estilo pixel art */
+}
+
+/* Verso da carta (Pokébola) */
+.card .back {
+background: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png') center/50% no-repeat;    background-color: #ff0000; /* Vermelho Pokébola */
+    border: 2px solid #3b4cca;
+}
+
+/* Efeito de hover (só quando não estiver virada) */
+.card:not(.flip):hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+
+/* ---- OVERLAY (TELA DA EQUIPE ROCKET) ---- */
+.rocket_overlay {
+    position: fixed;
+    inset: 0; /* Atalho para top/bottom/left/right = 0 */
+    background: rgba(0,0,0,0.9);
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    z-index: 9999;
+    animation: fadeIn 0.6s ease-out;
+    
+    /* Garante a fonte pixelada aqui também */
+    font-family: 'Press Start 2P', cursive; 
+}
+
+.rocket_overlay img {
+    width: 300px;
+    max-width: 80%; /* Responsividade */
+    margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
