@@ -1,27 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex</title>
+    <title>Pokédex Memory Game</title>
     <link rel="stylesheet" href="style/login.css">
     <link rel="stylesheet" href="style/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    
+    <div class="bg-overlay"></div>
+
     <main id="login-screen">
         
-        <h1>Pokémon - memory game</h1>
-        <input type="text" id="player-name" placeholder="Digite seu nome, treinador!">
-        <button id="start-btn">Começar Jogo</button>
-        
-        <h3>🏆 Ranking dos Melhores Treinadores 🏆</h3>
-        <ul id="ranking-list"></ul>
+        <div class="visual-panel">
+            <div class="brand-content">
+                <h1>Pokémon<br><span>Memory Game</span></h1>
+                <p>Prepare-se para testar sua memória!</p>
+            </div>
+            <div class="pokeball-divider">
+                <div class="pokeball-inner"></div>
+            </div>
+        </div>
+
+        <div class="form-panel">
+            <div class="login-header">
+                <h2>Login do Treinador</h2>
+                <p>Preencha para começar a aventura</p>
+            </div>
+
+            <div class="input-group">
+                <label for="player-name">SEU NOME</label>
+                <input type="text" id="player-name" placeholder="Ex: Ash Ketchum" autocomplete="off">
+            </div>
+            
+            <div class="input-group">
+                <label for="difficulty">DIFICULDADE</label>
+                <select id="difficulty">
+                    <option value="6">Fácil (6 Pares)</option>
+                    <option value="10" selected>Médio (10 Pares)</option>
+                    <option value="15">Difícil (15 Pares)</option>
+                </select>
+            </div>
+
+            <button id="start-btn">INICIAR JOGO</button>
+
+            <div class="ranking-mini">
+                <h4>🏆 Melhores Treinadores</h4>
+                <ul id="ranking-list"></ul>
+            </div>
+        </div>
     </main>
 
     <section id="game-screen" style="display:none;">
+        <button id="back-menu-btn">⬅ Sair</button>
         <div id="timer">Tempo: 0s</div>
         <div class="container"></div>
     </section>
+
+    <footer class="main-footer">
+        <p>Desenvolvido por <strong>Bridges</strong></p>
+    </footer>
 
     <script type="module" src="js/main.js"></script>
 </body>

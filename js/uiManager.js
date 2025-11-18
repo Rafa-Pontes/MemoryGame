@@ -1,5 +1,6 @@
 // js/uiManager.js
-export function showTeamRocket() {
+
+export function showTeamRocket(onRestart) {
   const overlay = document.createElement("div");
   overlay.classList.add('rocket_overlay');
   overlay.innerHTML = `
@@ -9,23 +10,36 @@ export function showTeamRocket() {
     <button id="restart-btn">Tentar Novamente</button>
   `;
   document.body.appendChild(overlay);
-  document.querySelector("#restart-btn").addEventListener("click", () => {
+  
+  // Associa o evento ao callback de reinício (Soft Reset)
+  // Importante: usamos o id #restart-btn que definimos no HTML acima
+  const btn = overlay.querySelector("#restart-btn");
+  btn.addEventListener("click", () => {
     document.body.removeChild(overlay);
-    location.reload(); // recarrega jogo
+    if (onRestart) onRestart();
   });
 }
 
-export function showVictory(playerName, timer) {
+export function showVictory(playerName, timer, onRestart) {
   const overlay = document.createElement("div");
   overlay.classList.add('rocket_overlay');
+  
+  // Estrutura base HTML
   overlay.innerHTML = `
-    <h2>🔥 Parabéns, ${playerName}! 🔥</h2>
+    <h2 id="victory-title"></h2>
     <p>Você venceu em ${timer}s!</p>
     <button id="restart-btn">Jogar Novamente</button>
   `;
+  
+  // INJEÇÃO SEGURA DE TEXTO (Previne XSS)
+  const titleElement = overlay.querySelector("#victory-title");
+  titleElement.textContent = `🔥 Parabéns, ${playerName}! 🔥`; // O navegador trata isso apenas como texto
+
   document.body.appendChild(overlay);
-  document.querySelector("#restart-btn").addEventListener("click", () => {
+  
+  const btn = overlay.querySelector("#restart-btn");
+  btn.addEventListener("click", () => {
     document.body.removeChild(overlay);
-    location.reload();
+    if (onRestart) onRestart();
   });
 }

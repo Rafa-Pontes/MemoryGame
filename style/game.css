@@ -1,3 +1,5 @@
+/* style/game.css - VERSÃO "BIG" 🐘 */
+
 /* --- Reset Básico --- */
 * {
     margin: 0;
@@ -6,45 +8,79 @@
 }
 
 body {
-    /* Fonte pixelada para o jogo */
     font-family: 'Press Start 2P', cursive; 
-    
-    /* Gradiente diferente para a tela do jogo */
-    background: linear-gradient(135deg, #ffcb05, #3b4cca);
-    height: 100vh;
+    background: linear-gradient(135deg, var(--primary, #ffcb05), var(--secondary, #3b4cca));
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem; /* Espaço para telas menores */
+    padding: 1rem;
 }
 
 /* ---- TABULEIRO DO JOGO ---- */
 .container {
-    width: 900px;
-    max-width: 100%; /* Adicionado para responsividade */
-    height: 500px;
-    max-height: 90vh; /* Adicionado para responsividade */
+    width: 100%;
+    /* MUDANÇA: Height auto permite o jogo crescer se as cartas forem grandes */
+    height: auto; 
+    min-height: 500px;
     
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.25); 
     border-radius: 15px;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
     
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 10px;
-    padding: 20px;
+    gap: 15px; /* Espaço entre as cartas */
+    padding: 25px;
+    
     perspective: 1000px;
+    justify-content: center;
+    align-content: center;
+    
+    transition: all 0.3s ease;
+}
+
+/* --- TAMANHOS AUMENTADOS AQUI --- */
+
+/* FÁCIL (12 cartas): Mínimo de 140px (Bem grande!) */
+.container.grid-easy {
+    grid-template-columns: repeat(4, minmax(140px, 1fr));
+    max-width: 800px; /* Container mais largo */
+}
+
+/* MÉDIO (20 cartas): Mínimo de 110px */
+.container.grid-medium {
+    grid-template-columns: repeat(5, minmax(110px, 1fr));
+    max-width: 900px;
+}
+
+/* DIFÍCIL (30 cartas): Mínimo de 95px */
+.container.grid-hard {
+    grid-template-columns: repeat(6, minmax(95px, 1fr));
+    max-width: 1100px;
+}
+
+/* RESPONSIVIDADE (CELULAR) */
+@media (max-width: 700px) {
+    /* No celular, diminuímos um pouco para caber na tela */
+    .container.grid-easy, 
+    .container.grid-medium, 
+    .container.grid-hard {
+        grid-template-columns: repeat(3, minmax(80px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
 }
 
 /* ---- CARTAS ---- */
 .card {
     position: relative;
     width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.7s;
+    aspect-ratio: 1 / 1; /* Mantém quadrada */
+    
     cursor: pointer;
-    border-radius: 10px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    background-color: transparent;
 }
 
 .card.flip {
@@ -56,64 +92,84 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Evita "piscar" a imagem de trás */
-    border-radius: 10px;
-}
-
-/* Frente da carta (Pokémon) */
-.card .front {
-    background-color: #fff;
+    border-radius: 12px;
+    backface-visibility: hidden; 
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: rotateY(180deg);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     border: 2px solid #3b4cca;
+}
+
+/* Frente (Onde fica o Pokémon) */
+.card .front {
+    background-color: #ffffff;
+    transform: rotateY(180deg); 
 }
 
 .card .front img {
-    width: 80%;
-    height: auto;
-    image-rendering: pixelated; /* Mantém o estilo pixel art */
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+    image-rendering: pixelated;
 }
 
-/* Verso da carta (Pokébola) */
+/* Verso (Pokébola) */
 .card .back {
-background: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png') center/50% no-repeat;    background-color: #ff0000; /* Vermelho Pokébola */
-    border: 2px solid #3b4cca;
+    background-color: #ff0000;
+    background-image: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png');
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    transform: rotateY(0deg);
 }
 
-/* Efeito de hover (só quando não estiver virada) */
+/* Efeito Hover */
 .card:not(.flip):hover {
     transform: scale(1.05);
-    transition: transform 0.2s ease-in-out;
+    z-index: 10; 
 }
 
-
-/* ---- OVERLAY (TELA DA EQUIPE ROCKET) ---- */
+/* ---- OVERLAY (TELA FINAL) ---- */
 .rocket_overlay {
     position: fixed;
-    inset: 0; /* Atalho para top/bottom/left/right = 0 */
-    background: rgba(0,0,0,0.9);
+    inset: 0;
+    background: rgba(0,0,0,0.95);
     color: white;
-    font-size: 1.5rem;
-    text-align: center;
-    
+    font-size: 1.2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
     z-index: 9999;
-    animation: fadeIn 0.6s ease-out;
-    
-    /* Garante a fonte pixelada aqui também */
+    animation: fadeIn 0.5s ease-out;
     font-family: 'Press Start 2P', cursive; 
+    text-align: center;
 }
 
 .rocket_overlay img {
-    width: 300px;
-    max-width: 80%; /* Responsividade */
+    max-width: 250px;
     margin-bottom: 20px;
+}
+
+.rocket_overlay button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #ffcb05;
+    color: #3b4cca;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.rocket_overlay button:hover {
+    transform: scale(1.05);
+    background-color: #ffd633;
 }
 
 @keyframes fadeIn {

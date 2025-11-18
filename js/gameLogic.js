@@ -13,10 +13,36 @@ let playerName = '';
 
 const gameContainer = document.querySelector('.container');
 const timerDisplay = document.querySelector("#timer");
+const loginScreen = document.querySelector("#login-screen");
+const gameScreen = document.querySelector("#game-screen");
+
+// --- PROTEÇÃO DE ERRO NO BOTÃO ---
+// Verifica se o botão existe antes de adicionar o evento para não travar o JS
+const backBtn = document.querySelector("#back-menu-btn");
+if (backBtn) {
+    backBtn.addEventListener("click", resetGameFull);
+}
 
 export function createGame(pokemonList, player) {
   playerName = player;
-  resetGameState();
+  resetBoardState(); // Limpa variáveis internas
+  
+  // --- ATUALIZAÇÃO CRÍTICA AQUI ---
+  gameContainer.innerHTML = ""; 
+  gameContainer.className = 'container'; // Reseta para não acumular classes antigas
+  
+  const totalCards = pokemonList.length * 2;
+
+  // Aplica a classe CSS correta baseada no número de cartas
+  if (totalCards === 12) {
+      gameContainer.classList.add('grid-easy');   // Força 4 colunas
+  } else if (totalCards === 20) {
+      gameContainer.classList.add('grid-medium'); // Força 5 colunas
+  } else if (totalCards === 30) {
+      gameContainer.classList.add('grid-hard');   // Força 6 colunas
+  }
+  // ----------------------------------
+  
   const shuffled = shuffleArray([...pokemonList, ...pokemonList]);
 
   shuffled.forEach(pokemon => {
@@ -64,12 +90,14 @@ function disableCards() {
   secondCard.removeEventListener('click', flipCard);
   resetBoard();
 
+  // Vitória
   if (document.querySelectorAll('.flip').length === cards.length) {
     clearInterval(timerInterval);
     setTimeout(() => {
-      showVictory(playerName, timer);
       saveToRanking(playerName, timer);
       loadRanking();
+      // Passamos resetGameFull como callback
+      showVictory(playerName, timer, resetGameFull); 
     }, 500);
   }
 }
@@ -91,7 +119,8 @@ function startTimer() {
     if (timer >= limitTimer) {
       clearInterval(timerInterval);
       lockBoard = true;
-      showTeamRocket();
+      // Passamos resetGameFull como callback
+      showTeamRocket(resetGameFull);
     }
   }, 1000);
 }
@@ -101,14 +130,25 @@ function resetBoard() {
   lockBoard = false;
 }
 
-function resetGameState() {
+function resetBoardState() {
   cards = [];
-  gameContainer.innerHTML = "";
   lockBoard = false;
   firstCard = null;
   secondCard = null;
   timer = 0;
   gameStarted = false;
+  clearInterval(timerInterval);
+  timerDisplay.textContent = `Tempo: 0s`;
+}
+
+// Função de Reset Completo (Soft Reset)
+export function resetGameFull() {
+  resetBoardState();
+  gameContainer.innerHTML = "";
+  
+  // Troca de telas
+  gameScreen.style.display = "none";
+  loginScreen.style.display = "flex"; 
 }
 
 function shuffleArray(array) {
@@ -118,3 +158,5 @@ function shuffleArray(array) {
   }
   return array;
 }
+
+
