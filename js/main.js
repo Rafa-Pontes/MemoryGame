@@ -3,13 +3,33 @@ import { fetchPokemonData } from "./apiService.js";
 import { createGame } from "./gameLogic.js";
 import { loadRanking } from "./rankingManager.js";
 
+
 const loginScreen = document.querySelector("#login-screen");
 const gameScreen = document.querySelector("#game-screen");
 const startBtn = document.querySelector("#start-btn");
 const playerInput = document.querySelector("#player-name");
 const difficultySelect = document.querySelector("#difficulty");
 
+const rankingBtn = document.querySelector("#ranking-btn");
+const rankingModal = document.querySelector("#ranking-modal");
+const closeRankingBtn = document.querySelector("#close-ranking-btn");
+
 loadRanking();
+
+rankingBtn.addEventListener("click", () => {
+    loadRanking(); 
+    rankingModal.style.display = "flex"; 
+});
+
+closeRankingBtn.addEventListener("click", () => {
+    rankingModal.style.display = "none"; 
+});
+
+rankingModal.addEventListener("click", (e) => {
+    if (e.target === rankingModal) {
+        rankingModal.style.display = "none";
+    }
+});
 
 startBtn.addEventListener("click", async () => {
   const name = playerInput.value.trim();
@@ -17,10 +37,10 @@ startBtn.addEventListener("click", async () => {
   // --- VALIDAÇÃO ROBUSTA ---
   if (name === "") {
     alert("⚠️ Por favor, digite seu nome, treinador!");
-    playerInput.focus(); // Coloca o cursor no campo para a pessoa digitar
-    playerInput.style.border = "2px solid red"; // Deixa vermelho pra avisar
-    setTimeout(() => playerInput.style.border = "none", 2000); // Tira o vermelho depois
-    return; // PARA TUDO AQUI. Não deixa o código descer.
+    playerInput.focus();
+    playerInput.style.border = "2px solid red"; 
+    setTimeout(() => playerInput.style.border = "none", 2000); 
+    return; 
   }
   // -------------------------
 

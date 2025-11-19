@@ -1,6 +1,7 @@
 // js/gameLogic.js
 import { saveToRanking, loadRanking } from "./rankingManager.js";
 import { showTeamRocket, showVictory } from "./uiManager.js";
+import { audioManager } from "./audioManager.js";
 
 let cards = [];
 let firstCard, secondCard;
@@ -113,14 +114,22 @@ function unflipCards() {
 function startTimer() {
   timer = 0;
   timerDisplay.textContent = `Tempo: 0s`;
+  
   timerInterval = setInterval(() => {
     timer++;
     timerDisplay.textContent = `Tempo: ${timer}s`;
+    
     if (timer >= limitTimer) {
       clearInterval(timerInterval);
       lockBoard = true;
-      // Passamos resetGameFull como callback
-      showTeamRocket(resetGameFull);
+      
+      audioManager.playRocket();
+      
+      showTeamRocket(() => {
+          audioManager.stopRocket(); 
+          resetGameFull(); 
+      });
+      
     }
   }, 1000);
 }

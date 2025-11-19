@@ -46,9 +46,15 @@
 
             <button id="start-btn">INICIAR JOGO</button>
 
-            <div class="ranking-mini">
-                <h4>🏆 Melhores Treinadores</h4>
-                <ul id="ranking-list"></ul>
+            <button id="ranking-btn" class="btn-secondary">🏆 Ver Ranking</button>
+
+            <div id="ranking-modal" class="modal-overlay" style="display: none;">
+                <div class="modal-content">
+                    <h3>🏆 Hall da Fama</h3>
+                    <ul id="ranking-list">
+                        </ul>
+                    <button id="close-ranking-btn">Fechar</button>
+                </div>
             </div>
         </div>
     </main>
@@ -60,7 +66,7 @@
     </section>
 
     <footer class="main-footer">
-        <p>Desenvolvido por <strong>Bridges</strong></p>
+        <a href="https://github.com/Rafa-Pontes/MemoryGame"><p>Desenvolvido por <strong>Bridges</strong></p></a>
     </footer>
 
     <script type="module" src="js/main.js"></script>
