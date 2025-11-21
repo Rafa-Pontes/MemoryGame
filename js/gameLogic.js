@@ -64,9 +64,22 @@ function createCard(name, imageSrc) {
   return card;
 }
 
+
 function flipCard() {
+  try {
+    if (audioManager && typeof audioManager.playFlip === 'function') {
+        audioManager.playFlip();
+    } else {
+        console.warn("A função playFlip não foi encontrada no audioManager.");
+    }
+  } catch (error) {
+    console.log("Erro ao tentar tocar som, mas o jogo segue:", error);
+  }
+  // ------------------------
+
   if (lockBoard || this === firstCard) return;
   this.classList.add('flip');
+  
   if (!gameStarted) {
     startTimer();
     gameStarted = true;
@@ -121,6 +134,8 @@ function startTimer() {
       clearInterval(timerInterval);
       lockBoard = true;
       
+
+      audioManager.stopBGM(); 
       audioManager.playRocket();
       
       showTeamRocket(() => {

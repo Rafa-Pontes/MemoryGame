@@ -49,7 +49,6 @@ startBtn.addEventListener("click", async () => {
     setTimeout(() => playerInput.style.border = "none", 2000); 
     return; 
   }
-  audioManager.stopBGM();
   // -------------------------
 
   // 1. Feedback de Carregamento

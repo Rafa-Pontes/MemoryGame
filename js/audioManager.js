@@ -2,7 +2,7 @@
 export const audioManager = { 
     rocketSound: new Audio('assets/pokemon-anime-sound-collection-team-rocket-motto-kanto-version_KkV4sgtO.mp3'),
     bgm: new Audio('assets/song/opening.mp3'),
-    flip: new Audio('assets/song/flip.mp3'), 
+    flip: new Audio('assets/song/flipcard.mp3'), 
     
     playRocket() { 
         this.rocketSound.volume = 0.5;
@@ -15,7 +15,6 @@ export const audioManager = {
     },
 
     playBGM(){
-        // Agora usamos 'this.bgm' consistentemente
         this.bgm.volume = 0.3;
         this.bgm.loop = true;
         this.bgm.play().catch(error => {
@@ -27,4 +26,9 @@ export const audioManager = {
         this.bgm.pause();
         this.bgm.currentTime = 0; 
     },
+
+    playFlip(){
+        this.flipSound.currentTime = 0; 
+        this.flipSound.volume = 0.5; // Volume agradável
+    }
 };
