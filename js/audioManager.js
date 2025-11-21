@@ -1,7 +1,8 @@
 // js/audioManager.js
 export const audioManager = { 
     rocketSound: new Audio('assets/pokemon-anime-sound-collection-team-rocket-motto-kanto-version_KkV4sgtO.mp3'),
-    bmg: new Audio('assets/song/opening'),
+    
+    bgm: new Audio('assets/song/opening.mp3'),
     
     playRocket() { 
         this.rocketSound.volume = 0.5;
@@ -14,8 +15,9 @@ export const audioManager = {
     },
 
     playBGM(){
-        this.bmg.volume = 0.3;
-        this.bmg.loop = true;
+        // Agora usamos 'this.bgm' consistentemente
+        this.bgm.volume = 0.3;
+        this.bgm.loop = true;
         this.bgm.play().catch(error => {
             console.log("Autoplay bloqueado. Aguardando interação do usuário.");
         });
@@ -23,6 +25,6 @@ export const audioManager = {
 
     stopBGM() {
         this.bgm.pause();
-        this.bgm.currentTime = 0; // Reinicia a música para a próxima vez
+        this.bgm.currentTime = 0; 
     },
 };
