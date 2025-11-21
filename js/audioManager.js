@@ -1,8 +1,8 @@
 // js/audioManager.js
 export const audioManager = { 
     rocketSound: new Audio('assets/pokemon-anime-sound-collection-team-rocket-motto-kanto-version_KkV4sgtO.mp3'),
-    
     bgm: new Audio('assets/song/opening.mp3'),
+    flip: new Audio('assets/song/flip.mp3'), 
     
     playRocket() { 
         this.rocketSound.volume = 0.5;
