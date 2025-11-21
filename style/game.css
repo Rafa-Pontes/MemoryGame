@@ -185,3 +185,82 @@ body {
     border-color: red; 
     animation: shake 0.4s ease-in-out;
 }
+
+/* Cabeçalho do Jogo (Botão e Timer) */
+.game-header {
+    display: flex;
+    justify-content: space-between; /* Botão na esq, Timer na dir */
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Mesma largura máx do jogo */
+    margin-bottom: 15px; /* Espaço entre cabeçalho e cartas */
+    padding: 0 10px;
+}
+
+#back-menu-btn {
+    padding: 8px 16px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem; /* Fonte menor para caber no celular */
+    background: #ff3333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #b30000; /* Efeito 3D simples */
+}
+
+#back-menu-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+#timer {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    color: white;
+    text-shadow: 2px 2px 0 #000;
+}
+
+/* style/game.css - SUBSTITUA O FINAL DO ARQUIVO POR ISSO: */
+
+/* RESPONSIVIDADE (CELULAR) */
+@media (max-width: 700px) {
+    
+    
+    body {
+        align-items: flex-start; /* Começa do topo, não do meio */
+        padding-top: 20px;       /* Um respiro no topo */
+        height: auto;            /* Deixa o corpo crescer o quanto precisar */
+    }
+
+    #game-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 40px; /* Espaço extra no final para não colar no rodapé */
+    }
+
+
+    
+    .container.grid-easy {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 10px;
+    }
+
+  
+    .container.grid-medium {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px; /* Gap menor para caber */
+    }
+
+    .container.grid-hard {
+        grid-template-columns: repeat(5, 1fr); 
+        gap: 5px; /* Gap bem pequeno */
+        padding: 10px 5px; /* Padding lateral menor */
+    }
+
+    .container.grid-hard .card {
+        min-height: 60px; /* Cartas menores no hard */
+    }
+}
