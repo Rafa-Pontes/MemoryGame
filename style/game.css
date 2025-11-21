@@ -1,4 +1,4 @@
-/* style/game.css - VERSÃO "BIG" 🐘 */
+/* style/game.css - */
 
 /* --- Reset Básico --- */
 * {
@@ -20,7 +20,6 @@ body {
 /* ---- TABULEIRO DO JOGO ---- */
 .container {
     width: 100%;
-    /* MUDANÇA: Height auto permite o jogo crescer se as cartas forem grandes */
     height: auto; 
     min-height: 500px;
     
@@ -29,7 +28,7 @@ body {
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
     
     display: grid;
-    gap: 15px; /* Espaço entre as cartas */
+    gap: 15px; 
     padding: 25px;
     
     perspective: 1000px;
@@ -39,7 +38,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* --- TAMANHOS AUMENTADOS AQUI --- */
 
 /* FÁCIL (12 cartas): Mínimo de 140px (Bem grande!) */
 .container.grid-easy {
@@ -75,7 +73,7 @@ body {
 .card {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1; /* Mantém quadrada */
+    aspect-ratio: 1 / 1; 
     
     cursor: pointer;
     transform-style: preserve-3d;
@@ -184,6 +182,6 @@ body {
 }
 
 .card.error .front {
-    border-color: red; /* Feedback visual extra */
+    border-color: red; 
     animation: shake 0.4s ease-in-out;
 }

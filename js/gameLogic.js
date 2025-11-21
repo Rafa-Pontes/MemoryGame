@@ -17,7 +17,6 @@ const timerDisplay = document.querySelector("#timer");
 const loginScreen = document.querySelector("#login-screen");
 const gameScreen = document.querySelector("#game-screen");
 
-// --- PROTEÇÃO DE ERRO NO BOTÃO ---
 // Verifica se o botão existe antes de adicionar o evento para não travar o JS
 const backBtn = document.querySelector("#back-menu-btn");
 if (backBtn) {
@@ -26,9 +25,9 @@ if (backBtn) {
 
 export function createGame(pokemonList, player) {
   playerName = player;
-  resetBoardState(); // Limpa variáveis internas
+  resetBoardState();
   
-  // --- ATUALIZAÇÃO CRÍTICA AQUI ---
+  
   gameContainer.innerHTML = ""; 
   gameContainer.className = 'container'; // Reseta para não acumular classes antigas
   
@@ -97,7 +96,6 @@ function disableCards() {
     setTimeout(() => {
       saveToRanking(playerName, timer);
       loadRanking();
-      // Passamos resetGameFull como callback
       showVictory(playerName, timer, resetGameFull); 
     }, 500);
   }
@@ -150,7 +148,6 @@ function resetBoardState() {
   timerDisplay.textContent = `Tempo: 0s`;
 }
 
-// Função de Reset Completo (Soft Reset)
 export function resetGameFull() {
   resetBoardState();
   gameContainer.innerHTML = "";
@@ -158,6 +155,8 @@ export function resetGameFull() {
   // Troca de telas
   gameScreen.style.display = "none";
   loginScreen.style.display = "flex"; 
+
+  audioManager.playBGM();
 }
 
 function shuffleArray(array) {

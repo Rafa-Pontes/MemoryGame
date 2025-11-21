@@ -11,8 +11,6 @@ export function showTeamRocket(onRestart) {
   `;
   document.body.appendChild(overlay);
   
-  // Associa o evento ao callback de reinício (Soft Reset)
-  // Importante: usamos o id #restart-btn que definimos no HTML acima
   const btn = overlay.querySelector("#restart-btn");
   btn.addEventListener("click", () => {
     document.body.removeChild(overlay);

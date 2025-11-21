@@ -31,12 +31,12 @@ body {
   
   width: 100%;
   max-width: 850px;
-  height: 500px; /* Altura fixa para manter o layout bonito */
+  height: 500px; 
   
   background: white;
   border-radius: 20px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-  overflow: hidden; /* Corta o que sair das bordas */
+  overflow: hidden; 
   position: relative;
 }
 
@@ -216,6 +216,11 @@ body {
   font-size: 0.8rem;
 }
 
+.main-footer a{
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-weight: bold;
+}
 
 
 .btn-secondary {

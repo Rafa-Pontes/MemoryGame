@@ -2,7 +2,7 @@
 import { fetchPokemonData } from "./apiService.js";
 import { createGame } from "./gameLogic.js";
 import { loadRanking } from "./rankingManager.js";
-
+import { audioManager } from "./audioManager.js"; 
 
 const loginScreen = document.querySelector("#login-screen");
 const gameScreen = document.querySelector("#game-screen");
@@ -15,6 +15,13 @@ const rankingModal = document.querySelector("#ranking-modal");
 const closeRankingBtn = document.querySelector("#close-ranking-btn");
 
 loadRanking();
+audioManager.playBGM();
+
+document.body.addEventListener('click', () => {
+    if (audioManager.bgm.paused) {
+        audioManager.playBGM();
+    }
+}, { once: true }); // "once: true" significa que esse evento só roda uma vez e se apaga
 
 rankingBtn.addEventListener("click", () => {
     loadRanking(); 
@@ -42,6 +49,7 @@ startBtn.addEventListener("click", async () => {
     setTimeout(() => playerInput.style.border = "none", 2000); 
     return; 
   }
+  audioManager.stopBGM();
   // -------------------------
 
   // 1. Feedback de Carregamento
