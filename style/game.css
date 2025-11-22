@@ -221,16 +221,16 @@ body {
     text-shadow: 2px 2px 0 #000;
 }
 
-/* style/game.css - SUBSTITUA O FINAL DO ARQUIVO POR ISSO: */
+
 
 /* RESPONSIVIDADE (CELULAR) */
 @media (max-width: 700px) {
     
     
     body {
-        align-items: flex-start; /* Começa do topo, não do meio */
-        padding-top: 20px;       /* Um respiro no topo */
-        height: auto;            /* Deixa o corpo crescer o quanto precisar */
+        align-items: flex-start; 
+        padding-top: 20px;      
+        height: auto;            
     }
 
     #game-screen {
@@ -239,6 +239,11 @@ body {
         align-items: center;
         width: 100%;
         padding-bottom: 40px; /* Espaço extra no final para não colar no rodapé */
+    }  
+    .main-footer p {
+        align-items: center;
+        justify-content: center;
+        margin: auto    ;
     }
 
 

@@ -7,7 +7,7 @@ let cards = [];
 let firstCard, secondCard;
 let lockBoard = false;
 let timerInterval;
-let timer = 0;
+let timer = 60; 
 let gameStarted = false;
 const limitTimer = 60;
 let playerName = '';
@@ -17,7 +17,7 @@ const timerDisplay = document.querySelector("#timer");
 const loginScreen = document.querySelector("#login-screen");
 const gameScreen = document.querySelector("#game-screen");
 
-// Verifica se o botão existe antes de adicionar o evento para não travar o JS
+// Verifica se o botão existe
 const backBtn = document.querySelector("#back-menu-btn");
 if (backBtn) {
     backBtn.addEventListener("click", resetGameFull);
@@ -27,21 +27,18 @@ export function createGame(pokemonList, player) {
   playerName = player;
   resetBoardState();
   
-  
   gameContainer.innerHTML = ""; 
-  gameContainer.className = 'container'; // Reseta para não acumular classes antigas
+  gameContainer.className = 'container'; 
   
   const totalCards = pokemonList.length * 2;
 
-  // Aplica a classe CSS correta baseada no número de cartas
   if (totalCards === 12) {
-      gameContainer.classList.add('grid-easy');   // Força 4 colunas
+      gameContainer.classList.add('grid-easy');   
   } else if (totalCards === 20) {
-      gameContainer.classList.add('grid-medium'); // Força 5 colunas
+      gameContainer.classList.add('grid-medium'); 
   } else if (totalCards === 30) {
-      gameContainer.classList.add('grid-hard');   // Força 6 colunas
+      gameContainer.classList.add('grid-hard');   
   }
-  // ----------------------------------
   
   const shuffled = shuffleArray([...pokemonList, ...pokemonList]);
 
@@ -64,18 +61,14 @@ function createCard(name, imageSrc) {
   return card;
 }
 
-
 function flipCard() {
   try {
     if (audioManager && typeof audioManager.playFlip === 'function') {
         audioManager.playFlip();
-    } else {
-        console.warn("A função playFlip não foi encontrada no audioManager.");
     }
   } catch (error) {
-    console.log("Erro ao tentar tocar som, mas o jogo segue:", error);
+    console.log("Erro som:", error);
   }
-  // ------------------------
 
   if (lockBoard || this === firstCard) return;
   this.classList.add('flip');
@@ -107,9 +100,16 @@ function disableCards() {
   if (document.querySelectorAll('.flip').length === cards.length) {
     clearInterval(timerInterval);
     setTimeout(() => {
-      saveToRanking(playerName, timer);
+      // --- CORREÇÃO DE RANKING ---
+      const timeTaken = limitTimer - timer; 
+      
+      saveToRanking(playerName, timeTaken); 
       loadRanking();
-      showVictory(playerName, timer, resetGameFull); 
+      
+      showVictory(playerName, timeTaken, resetGameFull); 
+      
+      if (audioManager.playRocket) audioManager.playRocket(); 
+      if (audioManager.stopGameSound) audioManager.stopGameSound();
     }, 500);
   }
 }
@@ -122,27 +122,27 @@ function unflipCards() {
   }, 1000);
 }
 
+// --- TIMER ---
 function startTimer() {
-  timer = 0;
-  timerDisplay.textContent = `Tempo: 0s`;
+  timer = limitTimer; 
+  
+  timerDisplay.textContent = `Tempo: ${timer}s`;
   
   timerInterval = setInterval(() => {
-    timer++;
+    timer--; 
     timerDisplay.textContent = `Tempo: ${timer}s`;
     
-    if (timer >= limitTimer) {
+    if (timer <= 0) {
       clearInterval(timerInterval);
       lockBoard = true;
       
-
-      audioManager.stopBGM(); 
+      audioManager.stopGameSound(); 
       audioManager.playRocket();
       
       showTeamRocket(() => {
           audioManager.stopRocket(); 
           resetGameFull(); 
       });
-      
     }
   }, 1000);
 }
@@ -157,20 +157,20 @@ function resetBoardState() {
   lockBoard = false;
   firstCard = null;
   secondCard = null;
-  timer = 0;
+  timer = limitTimer; 
   gameStarted = false;
   clearInterval(timerInterval);
-  timerDisplay.textContent = `Tempo: 0s`;
+  timerDisplay.textContent = `Tempo: ${limitTimer}s`; 
 }
 
 export function resetGameFull() {
   resetBoardState();
   gameContainer.innerHTML = "";
   
-  // Troca de telas
   gameScreen.style.display = "none";
   loginScreen.style.display = "flex"; 
 
+  audioManager.stopGameSound();
   audioManager.playBGM();
 }
 
@@ -181,5 +181,3 @@ function shuffleArray(array) {
   }
   return array;
 }
-
-
