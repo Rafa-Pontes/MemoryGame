@@ -53,10 +53,21 @@ function createCard(name, imageSrc) {
   const card = document.createElement('div');
   card.classList.add('card');
   card.dataset.name = name;
+
+  const fallbackImage = 'https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/items/poke-ball.png';
+
   card.innerHTML = `
-    <div class="front"><img src="${imageSrc}" alt="${name}"></div>
+    <div class="front">
+        <img 
+            src="${imageSrc}" 
+            alt="${name}" 
+            loading="lazy" 
+            onerror="this.onerror=null; this.src='${fallbackImage}'; this.classList.add('error-img');"
+        >
+    </div>
     <div class="back"></div>
   `;
+  
   card.addEventListener('click', flipCard);
   return card;
 }

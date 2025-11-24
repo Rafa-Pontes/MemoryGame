@@ -106,22 +106,33 @@ body {
 }
 
 .card .front img {
-    width: 85%;
-    height: 85%;
-    object-fit: contain;
-    image-rendering: pixelated;
+    width: 85%;        /* Garante tamanho */
+    height: 85%;       /* Garante tamanho */
+    object-fit: contain; /* Não deixa a imagem esticar */
+    
+    /* Melhoria visual para sprites pixelados */
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: crisp-edges;
+    
+    display: block; /* Remove comportamentos estranhos de linha */
 }
+
+.card .front img.error-img {
+    width: 50%;
+    height: 50%;
+    opacity: 0.5;
+}
+
 
 /* Verso (Pokébola) */
 .card .back {
     background-color: #ff0000;
-    background-image: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png');
+    background-image: url('https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/items/poke-ball.png');
     background-position: center;
     background-size: 50%;
     background-repeat: no-repeat;
     transform: rotateY(0deg);
 }
-
 /* Efeito Hover */
 .card:not(.flip):hover {
     transform: scale(1.05);
