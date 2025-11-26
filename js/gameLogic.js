@@ -110,19 +110,20 @@ function disableCards() {
   // Vitória
   if (document.querySelectorAll('.flip').length === cards.length) {
     clearInterval(timerInterval);
-    setTimeout(() => {
-      // --- CORREÇÃO DE RANKING ---
+    setTimeout(async () => { // Adicione ASYNC aqui
+      
       const timeTaken = limitTimer - timer; 
       
-      saveToRanking(playerName, timeTaken); 
+      // Adicione AWAIT aqui para garantir que salvou antes de carregar
+      await saveToRanking(playerName, timeTaken); 
+      
       loadRanking();
       
       showVictory(playerName, timeTaken, resetGameFull); 
-      
       if (audioManager.playRocket) audioManager.playRocket(); 
       if (audioManager.stopGameSound) audioManager.stopGameSound();
     }, 500);
-  }
+}
 }
 
 function unflipCards() {
