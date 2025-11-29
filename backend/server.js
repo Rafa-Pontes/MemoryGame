@@ -44,6 +44,10 @@ app.post('/api/ranking', (req, res) => {
     res.status(201).json({ message: 'Salvo com sucesso!' });
 });
 
-app.listen(3000, () => {
-    console.log('🚀 Servidor rodando na porta 3000');
+
+
+const PORT = process.env.PORT || 3000; // Usa a porta do Render OU a 3000 (se for local)
+
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });

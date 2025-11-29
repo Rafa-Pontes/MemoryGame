@@ -1,7 +1,6 @@
 // js/rankingManager.js
 
-const API_URL = 'https://pokedex-api-rp8l.onrender.com'; // Endereço do seu Back-End
-
+const API_URL = 'https://pokedex-api-rp8l.onrender.com/api/ranking';
 export async function saveToRanking(name, time) {
   try {
     // Em vez de salvar local, mandamos para o servidor (POST)
